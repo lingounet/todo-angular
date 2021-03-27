@@ -1,0 +1,35 @@
+<section class="todoapp">
+  <header class="header">
+    <h1>todos</h1>
+    <input class="new-todo" autofocus autocomplete="off" placeholder="What needs to be done?" name="newTodo" [(ngModel)]="newTodo.title" (keydown)="addTodo($event)">
+  </header>
+  <section class="main">
+    <input id="toggle-all" class="toggle-all" type="checkbox" (click)="markCompleted()">
+    <label for="toggle-all">Mark all as complete</label>
+    <ul class="todo-list">
+      <li class="todo" *ngFor="let todo of todos" [ngClass]="{'completed': todo.completed, 'editing': todo.id === editedTodo}">
+        <ng-container *ngIf="visibility === 'all' || (visibility === 'active' && !todo.completed) || (visibility === 'completed' && todo.completed)">
+          <div class="view">
+            <input class="toggle" type="checkbox" (click)="toggleTodo(todo)" [(ngModel)]="todo.completed">
+            <label (dblclick)="editTodo(todo)">{{todo.title}}</label>
+            <button class="destroy" (click)="removeTodo(todo)"></button>
+          </div>
+          <input class="edit" type="text" [(ngModel)]="todo.title" (keydown)="doneEdit(todo, $event)">
+        </ng-container>
+      </li>
+    </ul>
+  </section>
+  <footer class="footer">
+    <span class="todo-count">
+      <strong>{{remainingText()}}</strong>
+    </span>
+    <ul class="filters">
+      <li><a (click)="check('all')" [ngClass]="{'selected': visibility === 'all'}">All</a></li>
+      <li><a (click)="check('active')" [ngClass]="{'selected': visibility === 'active'}">Active</a></li>
+      <li><a (click)="check('completed')" [ngClass]="{'selected': visibility === 'completed'}">Completed</a></li>
+    </ul>
+    <button class="clear-completed" (click)="removeCompleted()" *ngIf="todos.length > remaining">
+      Clear completed
+    </button>
+  </footer>
+</section>
