@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
@@ -24,6 +24,15 @@ jobs:
         run: npm run build -- --prod
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.2.2
+        with:
+          name: todo-angular-${{ github.run_id }}
+          path: ./dist/todo-ui
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.0.8
         with:
           name: todo-angular-${{ github.run_id }}
           path: ./dist/todo-ui
