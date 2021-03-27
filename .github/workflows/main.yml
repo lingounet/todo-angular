@@ -29,6 +29,7 @@ jobs:
           path: ./dist/todo-ui
   deploy:
     runs-on: ubuntu-latest
+    needs: build
     if: github.ref == 'refs/heads/main'
     steps:
       - name: Download a Build Artifact
