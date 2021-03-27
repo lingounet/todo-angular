@@ -22,3 +22,8 @@ jobs:
         run: npm ci
       - name: Build app
         run: npm run build -- --prod
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2.2.2
+        with:
+          name: todo-angular
+          path: ./dist/todo-ui
