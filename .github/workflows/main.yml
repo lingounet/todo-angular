@@ -27,3 +27,14 @@ jobs:
         with:
           name: todo-angular-${{ github.run_id }}
           path: ./dist/todo-ui
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Azure CLI Action
+        uses: Azure/cli@1.0.4
+        with:
+          inlineScript: az storage blob upload-batch --account-name stgodsidptodoui -d '$web' -s .
+      - name: Azure logout
+        run: |
+          az logout
