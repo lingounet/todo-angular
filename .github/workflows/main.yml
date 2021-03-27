@@ -34,7 +34,7 @@ jobs:
       - name: Azure CLI Action
         uses: Azure/cli@1.0.4
         with:
-          inlineScript: az storage blob upload-batch --account-name stgodsidptodoui -d '$web' -s .
+          inlineScript: az storage blob upload-batch --account-name stgodsidptodoui -d '$web' -s ./dist/todo-ui
       - name: Azure logout
         run: |
           az logout
